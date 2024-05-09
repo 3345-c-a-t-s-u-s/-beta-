@@ -335,6 +335,9 @@ end
 
 if (syn and syn.request) then
 	local old = clonefunction(syn.request)
+	if not getgenv().syn then
+		getgenv().syn = {}
+	end
 	getgenv().syn.request = function(gg)
 		local res = old(gg)
 
@@ -346,6 +349,9 @@ end
 
 if (http and http.request) then
 	local old = clonefunction(http.request)
+	if not getgenv().http then
+		getgenv().http = {}
+	end
 	getgenv().http.request = function(gg)
 		local res = old(gg)
 
@@ -357,6 +363,9 @@ end
 
 if (fluxus and fluxus.request) then
 	local old = clonefunction((fluxus and fluxus.request))
+	if not getgenv().fluxus then
+		getgenv().fluxus = {}
+	end
 	getgenv().fluxus.request = function(gg)
 		local res = old(gg)
 
