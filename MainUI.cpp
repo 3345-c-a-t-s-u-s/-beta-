@@ -1,3 +1,5 @@
+-- DB
+
 local UIS = game:GetService('UserInputService')
 local TWS = game:GetService('TweenService')
 local TS = game:GetService('TextService')
@@ -256,6 +258,8 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 		ScreenUI = true
 	}
 	
+    WindowMetatable.Transparencys = {}
+
 	local ScreenGui = Instance.new("ScreenGui")
 	local Frame = Instance.new("Frame")
 	local UIStroke = Instance.new("UIStroke")
@@ -804,11 +808,18 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 						TWS:Create(TurnOn,TweenInfo.new(0.15),{Size = UDim2.fromScale(1,1)}):Play()
 						TWS:Create(Label,TweenInfo.new(0.3),{TextTransparency = 0}):Play()
 
+                        if  WindowMetatable.Transparencys[Icon_2] then
+                            WindowMetatable.Transparencys[Icon_2].ImageTransparency = 0
+                        end
+                        
 					else
 						TWS:Create(Label,TweenInfo.new(0.3),{TextTransparency = 0.25}):Play()
 						TWS:Create(Icon_2,TweenInfo.new(0.15),{ImageTransparency = 1}):Play()
 						TWS:Create(TurnOn,TweenInfo.new(0.3),{Size = UDim2.fromScale(0,0)}):Play()
 						
+                        if  WindowMetatable.Transparencys[Icon_2] then
+                            WindowMetatable.Transparencys[Icon_2].ImageTransparency = 1
+                        end
 					end
 				end
 				
@@ -1758,8 +1769,6 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 		return TabMetatable;
 	end
 	
-	WindowMetatable.Transparencys = {}
-	
 	local function SaveTransparency(object)
 		local Val,BT = pcall(function()
 			return object.BackgroundTransparency
@@ -1811,7 +1820,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				end)
 				
 				pcall(function()
-					TWS:Create(v,TweenInfo.new(0.5),{ImageTransparency = Save.ImageTransparency}):Play()
+					TWS:Create(v,TweenInfo.new(0.8),{ImageTransparency = Save.ImageTransparency}):Play()
 				end)
 			else
 				pcall(function()
@@ -1827,7 +1836,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				end)
 
 				pcall(function()
-					TWS:Create(v,TweenInfo.new(0.5),{ImageTransparency = 1}):Play()
+					TWS:Create(v,TweenInfo.new(0.4),{ImageTransparency = 1}):Play()
 				end)
 			end
 		end
