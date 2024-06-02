@@ -706,7 +706,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				Label.Position = UDim2.new(0.549679101, 0, 0.5, 0)
 				Label.Size = UDim2.new(0.850641727, 0, 0.5, 0)
 				Label.Font = Enum.Font.GothamBold
-				Label.Text = "Toggle Function"
+				Label.Text = ToggleName or "Toggle Function"
 				Label.TextColor3 = Color3.fromRGB(252, 252, 252)
 				Label.TextScaled = true
 				Label.TextSize = 14.000
