@@ -48,18 +48,25 @@ function Create_Ripple<Effect...>(Parent : Frame)
 	game:GetService('Debris'):AddItem(ripple,2.2)
 end
 
-local Huakuay = {
+local Huakuay = {};
+	
+Huakuay = {
 	CORE_GUI = (gethui and gethui()) or game:FindFirstChild('\67\111\114\101\71\117\105') or game.Players.LocalPlayer.PlayerGui,
-	Screen = UDim2.new(0.15, 250,0.15, 310),
+	Screen = UDim2.new(0.1, 250,0.135, 310),
+	Theme = {
+		MainColor = Color3.fromRGB(255, 0, 4),
+		IconColor = Color3.fromRGB(255, 0, 4),
+		MainColor2 = Color3.fromRGB(222, 0, 4),
+	},
 	Icon = (function()
 		local ____d,nigg = pcall(function()
 			return game:HttpGet("https://raw.githubusercontent.com/evoincorp/lucideblox/master/src/modules/util/icons.json")
 		end)
-		
+
 		if ____d and nigg then
 			return game:GetService('HttpService'):JSONDecode(nigg).icons;
 		end
-		
+
 		return {}
 	end)(),
 	b_function = function() end,
@@ -108,9 +115,9 @@ local Huakuay = {
 				Icon.SizeConstraint = Enum.SizeConstraint.RelativeYY
 				Icon.ZIndex = 8
 				Icon.Image = "rbxassetid://7743866778"
-				Icon.ImageColor3 = Color3.fromRGB(255, 0, 4)
-	
-				
+				Icon.ImageColor3 = Huakuay.Theme.MainColor
+
+
 				Label.Name = "Label"
 				Label.Parent = TabButton
 				Label.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -128,7 +135,7 @@ local Huakuay = {
 				Label.TextSize = 14.000
 				Label.TextWrapped = true
 				Label.TextXAlignment = Enum.TextXAlignment.Left
-			
+
 				Description.Name = "Description"
 				Description.Parent = TabButton
 				Description.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -151,7 +158,7 @@ local Huakuay = {
 				Status.Name = "Status"
 				Status.Parent = TabButton
 				Status.AnchorPoint = Vector2.new(0.5, 0.5)
-				Status.BackgroundColor3 = Color3.fromRGB(255, 0, 4)
+				Status.BackgroundColor3 = Huakuay.Theme.MainColor
 				Status.BorderColor3 = Color3.fromRGB(0, 0, 0)
 				Status.BorderSizePixel = 0
 				Status.Position = UDim2.new(0.949999988, 0, 0.150000006, 0)
@@ -174,7 +181,7 @@ local Huakuay = {
 				Button.TextColor3 = Color3.fromRGB(0, 0, 0)
 				Button.TextSize = 14.000
 				Button.TextTransparency = 1.000
-				
+
 				return {
 					TabButton = TabButton,
 					UIAspectRatioConstraint = UIAspectRatioConstraint,
@@ -221,7 +228,7 @@ local Huakuay = {
 				UIListLayout.Parent = Left
 				UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 				UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-				UIListLayout.Padding = UDim.new(0, 6)
+				UIListLayout.Padding = UDim.new(0.6,0)
 
 				Right.Name = "Right"
 				Right.Parent = TabFrame
@@ -239,8 +246,8 @@ local Huakuay = {
 				UIListLayout_2.Parent = Right
 				UIListLayout_2.HorizontalAlignment = Enum.HorizontalAlignment.Center
 				UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-				UIListLayout_2.Padding = UDim.new(0, 6)
-				
+				UIListLayout_2.Padding = UDim.new(0.5,0)
+
 				return {
 					TabFrame = TabFrame,
 					Left = Left,
@@ -251,14 +258,15 @@ local Huakuay = {
 	}
 }
 
+
 function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 	local WindowMetatable = {
 		__tabs = {},
 		TabSelect = 1,
 		ScreenUI = true
 	}
-	
-    WindowMetatable.Transparencys = {}
+
+	WindowMetatable.Transparencys = {}
 
 	local ScreenGui = Instance.new("ScreenGui")
 	local Frame = Instance.new("Frame")
@@ -280,22 +288,28 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 	ScreenGui.ResetOnSpawn = false
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 	ScreenGui.IgnoreGuiInset = true
-	
+
 	Frame.Parent = ScreenGui
 	Frame.AnchorPoint = Vector2.new(0.5, 0.5)
 	Frame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 	Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Frame.BorderSizePixel = 0
-	Frame.Position = UDim2.new(0.5, 0, 0.5, 0)
-	Frame.Size = Huakuay.Screen
-	
+	Frame.Position = UDim2.new(0.5, 0, 0.4, 0)
+	Frame.Size = UDim2.fromScale(0.1,0.1)
+	Frame.Active = true
 	Frame.BackgroundTransparency = 1
+	
+	TWS:Create(Frame,TweenInfo.new(0.95,Enum.EasingStyle.Quint),{Position = UDim2.new(0.5, 0, 0.5, 0)}):Play()
+	TWS:Create(Frame,TweenInfo.new(0.75,Enum.EasingStyle.Quint),{Size = Huakuay.Screen}):Play()
 	TWS:Create(Frame,TweenInfo.new(1.1),{BackgroundTransparency = 0}):Play()
-	
-	
+
+
 	UIStroke.Thickness = 2.000
 	UIStroke.Color = Color3.fromRGB(43, 43, 43)
 	UIStroke.Parent = Frame
+	UIStroke.Transparency = 1
+	
+	TWS:Create(UIStroke,TweenInfo.new(1),{Transparency = 0}):Play()
 	
 	DropShadow.Name = "DropShadow"
 	DropShadow.Parent = Frame
@@ -310,8 +324,9 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 	DropShadow.ImageTransparency = 1
 	DropShadow.ScaleType = Enum.ScaleType.Slice
 	DropShadow.SliceCenter = Rect.new(49, 49, 450, 450)
-	TWS:Create(DropShadow,TweenInfo.new(1),{ImageTransparency = 0.500}):Play()
 	
+	TWS:Create(DropShadow,TweenInfo.new(1),{ImageTransparency = 0.500}):Play()
+
 	Header.Name = "Header"
 	Header.Parent = Frame
 	Header.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
@@ -320,7 +335,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 	Header.Position = UDim2.new(0, 0, 3.91451742e-08, 0)
 	Header.Size = UDim2.new(1, 0, 0.183088794, 0)
 	Header.ZIndex = 5
-	
+
 	Header.BackgroundTransparency = 1
 	TWS:Create(Header,TweenInfo.new(1.1),{BackgroundTransparency = 0}):Play()
 
@@ -335,10 +350,13 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 	Logo.SizeConstraint = Enum.SizeConstraint.RelativeYY
 	Logo.ZIndex = 5
 	Logo.Image = WindowIcon or "http://www.roblox.com/asset/?id=17702123964"
-	Logo.ImageColor3 = Color3.fromRGB(255, 0, 4)
+	Logo.ImageColor3 = Huakuay.Theme.IconColor
 	Logo.ImageTransparency = 1
-	TWS:Create(Logo,TweenInfo.new(1.2),{ImageTransparency = 0}):Play()
-
+	
+	task.delay(0.5,function()
+		TWS:Create(Logo,TweenInfo.new(1.2,Enum.EasingStyle.Quint),{ImageTransparency = 0}):Play()
+	end)
+	
 	DropShadow2.Name = "DropShadow2"
 	DropShadow2.Parent = Header
 	DropShadow2.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -362,9 +380,9 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 	TitleLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	TitleLabel.BorderSizePixel = 0
 	TitleLabel.Position = UDim2.new(0.547999978, 0, 0.150000006, 0)
-	TitleLabel.Size = UDim2.new(0.889999986, 0, 0.228, 0)
+	TitleLabel.Size = UDim2.new(0.889999986, 0, 0.2, 0)
 	TitleLabel.ZIndex = 6
-	TitleLabel.Font = Enum.Font.SourceSansBold
+	TitleLabel.Font = Enum.Font.GothamBold
 	TitleLabel.Text = WindowName or "BEDOL HUB"
 	TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 	TitleLabel.TextScaled = true
@@ -420,8 +438,8 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 	TabButtonFrame.Position = UDim2.new(0.5, 0, 0.699999988, 0)
 	TabButtonFrame.Size = UDim2.new(0.964999974, 0, 0.479999989, 0)
 	TabButtonFrame.ZIndex = 6
-	
-	
+
+
 	TabButtons.Name = "TabButtons"
 	TabButtons.Parent = TabButtonFrame
 	TabButtons.Active = true
@@ -441,8 +459,25 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 	UIListLayout.FillDirection = Enum.FillDirection.Horizontal
 	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-	UIListLayout.Padding = UDim.new(0, 8)
-
+	UIListLayout.Padding = UDim.new(1, 0)
+	
+	local BinFrame = Instance.new('Frame')
+	BinFrame.BackgroundTransparency = 1
+	BinFrame.Size = UDim2.new(0,0,0,0)
+	BinFrame.Parent = TabButtons
+	
+	local effect_slide = TWS:Create(UIListLayout,TweenInfo.new(1,Enum.EasingStyle.Quint),{Padding = UDim.new(0, 1)})
+	
+	effect_slide.Completed:Connect(function()
+		
+		TWS:Create(UIListLayout,TweenInfo.new(0.4),{Padding = UDim.new(0, 8)}):Play()
+		
+		BinFrame:Destroy()
+		
+	end)
+	
+	effect_slide:Play()
+	
 	Tabs.Name = "Tabs"
 	Tabs.Parent = Frame
 	Tabs.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -454,7 +489,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 	Tabs.Position = UDim2.new(0.5, 0, 0.59154439, 0)
 	Tabs.Size = UDim2.new(1, 0, 0.816911221, 0)
 	Tabs.ZIndex = 2
-	
+
 	function WindowMetatable:NewTab(TabName,TabDesc,TabIcon)
 		local TabMetatable = {}
 		local Button = Huakuay.HUAKUAY.Tab.TabButton()
@@ -464,14 +499,15 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 		Button.Description.Text = TabDesc or "-"
 		Button.Icon.Image = Huakuay.Icon[TabIcon] or TabIcon
 		Button.TabButton.Parent = TabButtons
-		
+		Button.UIAspectRatioConstraint.AspectRatio = 3.250 + (tostring(TabName):len() / 17.5)
+	
 		TabFrame.TabFrame.Name = TabName
 		TabFrame.TabFrame.Parent = Tabs
 		local MyTabNumber = #WindowMetatable.__tabs + 1
-		
+
 		local Right = UDim2.new(1.55, 0, 0.5, 0)
 		local Left = UDim2.new(-1.25, 0, 0.5, 0)
-		
+
 		TabFrame.TabFrame:GetPropertyChangedSignal('Position'):Connect(function()
 			if TabFrame.TabFrame.Position == Left or TabFrame.TabFrame.Position == Right then
 				TabFrame.TabFrame.Visible = false
@@ -479,9 +515,12 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				TabFrame.TabFrame.Visible = true
 			end
 		end)
-		
+
 		local function __toggle(val)
 			if val then
+				
+				TWS:Create(Button.UIAspectRatioConstraint,TweenInfo.new(0.35,Enum.EasingStyle.Back),{AspectRatio = 3.250 + (tostring(TabName):len() / 17.5)}):Play()
+				
 				TWS:Create(Button.Status,TweenInfo.new(0.15),{BackgroundTransparency = 0,Size = UDim2.fromScale(0.2,0.2)}):Play()
 				TWS:Create(Button.Icon,TweenInfo.new(0.2),{ImageTransparency = 0}):Play()
 				TWS:Create(Button.Label,TweenInfo.new(0.3),{TextTransparency = 0}):Play()
@@ -490,12 +529,14 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				TWS:Create(TabFrame.TabFrame,TweenInfo.new(0.7),{Size = UDim2.new(0.980000019, 0, 0.980000019, 0)}):Play()
 			else
 				
+				TWS:Create(Button.UIAspectRatioConstraint,TweenInfo.new(0.35,Enum.EasingStyle.Back),{AspectRatio = 3.250}):Play()
+				
 				if 	WindowMetatable.TabSelect < MyTabNumber then
 					TWS:Create(TabFrame.TabFrame,TweenInfo.new(0.4),{Position = Right}):Play()
 				else
 					TWS:Create(TabFrame.TabFrame,TweenInfo.new(0.4),{Position = Left}):Play()
 				end
-				
+
 				TWS:Create(TabFrame.TabFrame,TweenInfo.new(0.1),{Size = UDim2.new(0.930000019, 0, 0.930000019, 0)}):Play()
 				TWS:Create(Button.Description,TweenInfo.new(0.4),{TextTransparency = 0.6}):Play()
 				TWS:Create(Button.Label,TweenInfo.new(0.3),{TextTransparency = 0.55}):Play()
@@ -503,26 +544,26 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				TWS:Create(Button.Status,TweenInfo.new(0.15),{BackgroundTransparency = 1,Size = UDim2.fromScale(0,0)}):Play()
 			end
 		end
-		
+
 		if not WindowMetatable.__tabs[1] then
 			__toggle(true)
 		else
 			TabFrame.TabFrame.Visible = false
-			
+
 			if 	WindowMetatable.TabSelect < MyTabNumber then
 				TabFrame.TabFrame.Position = Right
 			else
 				TabFrame.TabFrame.Position = Left
 			end
-			
+
 			__toggle(false)
 		end
-		
+
 		table.insert(WindowMetatable.__tabs,{
 			__callback = __toggle,
 			TabFrame = TabFrame.TabFrame
 		})
-		
+
 		task.spawn(function()
 			local dela = tick()
 			while true do task.wait(math.random())
@@ -543,29 +584,38 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 		end)
 		Button.Button.MouseButton1Click:Connect(function()
 			Create_Ripple(Button.TabButton)
-			
+
 			WindowMetatable.TabSelect = MyTabNumber
-			
+
 			for i,v in pairs(WindowMetatable.__tabs) do
 				if v.TabFrame == TabFrame.TabFrame then
-				
+
 					v.__callback(true)
-					
+
 				else
 					v.__callback(false)
 				end
 			end
 		end)
-		
+
 		function TabMetatable.__dex(LEFT_TIGHT:ScrollingFrame)
-			local UIListLayout:UIListLayout = LEFT_TIGHT:WaitForChild('UIListLayout')
+			
+			local BinFrame = Instance.new('Frame')
+			BinFrame.BackgroundTransparency = 1
+			BinFrame.Size = UDim2.new(0,0,0,0)
+			BinFrame.Parent = LEFT_TIGHT
+			
+			local UIListLayout = LEFT_TIGHT:WaitForChild('UIListLayout')
+			
+			TWS:Create(UIListLayout,TweenInfo.new(1,Enum.EasingStyle.Quint),{Padding = UDim.new(0, 6)}):Play()
 			
 			UIListLayout:GetPropertyChangedSignal('AbsoluteContentSize'):Connect(function()
 				LEFT_TIGHT.CanvasSize = UDim2.new(0,0,0,UIListLayout.AbsoluteContentSize.Y + 5)
 			end)
 			
+			local couts = 0
 			local metatable = {}
-			
+
 			function metatable:NewLabel(LabelName)
 				local Label = Instance.new("Frame")
 				local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
@@ -580,27 +630,32 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				Label.BorderSizePixel = 0
 				Label.ClipsDescendants = true
 				Label.Size = UDim2.new(1, 0, 0.899999976, 0)
-				
+
 				Label.BackgroundTransparency = 1
 
 				task.delay(0.5,function()
 					TWS:Create(Label,TweenInfo.new(0.55),{BackgroundTransparency = 0}):Play()
+					
+				end)
+
+
+				UIAspectRatioConstraint.Parent = Label
+				UIAspectRatioConstraint.AspectRatio = 20
+				UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
+				
+				task.delay(0.4,function()
+					TWS:Create(UIAspectRatioConstraint,TweenInfo.new(0.4),{AspectRatio = 11.000}):Play()
 				end)
 				
-				
-				UIAspectRatioConstraint.Parent = Label
-				UIAspectRatioConstraint.AspectRatio = 11.000
-				UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
-
 				UIStroke.Color = Color3.fromRGB(43, 43, 43)
 				UIStroke.Parent = Label
-				
+
 				UIStroke.Transparency = 1
 
 				task.delay(0.5,function()
 					TWS:Create(UIStroke,TweenInfo.new(0.55),{Transparency = 0}):Play()
 				end)
-				
+
 				Label_2.Name = "Label"
 				Label_2.Parent = Label
 				Label_2.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -617,13 +672,13 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				Label_2.TextSize = 14.000
 				Label_2.TextWrapped = true
 				Label_2.TextXAlignment = Enum.TextXAlignment.Left
-				
+
 				Label_2.TextTransparency = 1
 
 				task.delay(0.5,function()
 					TWS:Create(Label_2,TweenInfo.new(0.55),{TextTransparency = 0.25}):Play()
 				end)
-				
+
 				Icon.Name = "Icon"
 				Icon.Parent = Label
 				Icon.AnchorPoint = Vector2.new(1, 0.5)
@@ -641,7 +696,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				task.delay(0.5,function()
 					TWS:Create(Icon,TweenInfo.new(0.55),{ImageTransparency = 0}):Play()
 				end)
-				
+
 				return {
 					edit = function(t)
 						Label_2.Text = t or "Label Function"
@@ -651,10 +706,10 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 					end,
 				}
 			end
-			
+
 			function metatable:NewToggle(ToggleName,Default,callback)
 				callback = callback or Huakuay.b_function
-				
+
 				local Toggle = Instance.new("Frame")
 				local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
 				local UIStroke = Instance.new("UIStroke")
@@ -668,7 +723,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				local UIGradient_2 = Instance.new("UIGradient")
 				local Icon_2 = Instance.new("ImageLabel")
 				local Button = Instance.new("TextButton")
-				
+
 				Toggle.Name = "Toggle"
 				Toggle.Parent = LEFT_TIGHT
 				Toggle.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
@@ -680,23 +735,28 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 
 				task.delay(0.5,function()
 					TWS:Create(Toggle,TweenInfo.new(0.55),{BackgroundTransparency = 0}):Play()
+					
 				end)
+				
+	
 
 				UIAspectRatioConstraint.Parent = Toggle
-				UIAspectRatioConstraint.AspectRatio = 8.000
+				UIAspectRatioConstraint.AspectRatio = 8
 				UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
-
+				
+		
+				
 				UIStroke.Thickness = 1.500
 				UIStroke.Color = Color3.fromRGB(18, 18, 18)
 				UIStroke.Parent = Toggle
-				
+
 				UIStroke.Transparency = 1
 
 				task.delay(0.5,function()
 					TWS:Create(UIStroke,TweenInfo.new(0.55),{Transparency = 0}):Play()
 				end)
-				
-				
+
+
 				UICorner.CornerRadius = UDim.new(0, 2)
 				UICorner.Parent = Toggle
 
@@ -746,20 +806,21 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				UICorner_2.Parent = Icon
 
 				TurnOn.Name = "TurnOn"
+				TurnOn.BackgroundTransparency = 1
 				TurnOn.Parent = Icon
 				TurnOn.AnchorPoint = Vector2.new(0.5, 0.5)
-				TurnOn.BackgroundColor3 = Color3.fromRGB(255, 0, 4)
+				TurnOn.BackgroundColor3 = Huakuay.Theme.MainColor
 				TurnOn.BorderColor3 = Color3.fromRGB(0, 0, 0)
 				TurnOn.BorderSizePixel = 0
 				TurnOn.Position = UDim2.new(0.5, 0, 0.5, 0)
 				TurnOn.Size = UDim2.new(1, 0, 1, 0)
 				TurnOn.ZIndex = 8
-				TurnOn.BackgroundTransparency = 1
+				
 
 				task.delay(0.5,function()
 					TWS:Create(TurnOn,TweenInfo.new(0.55),{BackgroundTransparency = 0}):Play()
 				end)
-				
+
 				UICorner_3.CornerRadius = UDim.new(0, 4)
 				UICorner_3.Parent = TurnOn
 
@@ -779,16 +840,16 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				Icon_2.SizeConstraint = Enum.SizeConstraint.RelativeYY
 				Icon_2.ZIndex = 9
 				Icon_2.Image = "rbxassetid://7733715400"
-				
-				
+
+
 				if Default then
 					Icon_2.ImageTransparency = 1
 
 					task.delay(0.5,function()
-						TWS:Create(Icon_2,TweenInfo.new(0.55),{ImageTransparency = 0}):Play()
+						TWS:Create(Icon_2,TweenInfo.new(0.55),{ImageTransparency = 0,Size = UDim2.fromScale(1,1)}):Play()
 					end)
 				end
-				
+
 				Button.Name = "Button"
 				Button.Parent = Toggle
 				Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -801,38 +862,58 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				Button.TextColor3 = Color3.fromRGB(0, 0, 0)
 				Button.TextSize = 14.000
 				Button.TextTransparency = 1.000
-				
+
 				local function __toggle_interface(val)
 					if val then
 						TWS:Create(Icon_2,TweenInfo.new(0.3),{ImageTransparency = 0}):Play()
-						TWS:Create(TurnOn,TweenInfo.new(0.15),{Size = UDim2.fromScale(1,1)}):Play()
+						TWS:Create(TurnOn,TweenInfo.new(0.2,Enum.EasingStyle.Back),{Size = UDim2.fromScale(1,1) , BackgroundTransparency = 0}):Play()
 						TWS:Create(Label,TweenInfo.new(0.3),{TextTransparency = 0}):Play()
-
-                        if  WindowMetatable.Transparencys[Icon_2] then
-                            WindowMetatable.Transparencys[Icon_2].ImageTransparency = 0
-                        end
-                        
+						
+						if  WindowMetatable.Transparencys[TurnOn] then
+							WindowMetatable.Transparencys[TurnOn].BackgroundTransparency = 0
+						end
+						
+						if  WindowMetatable.Transparencys[Icon_2] then
+							WindowMetatable.Transparencys[Icon_2].ImageTransparency = 0
+						end
+						
+						if  WindowMetatable.Transparencys[Label] then
+							WindowMetatable.Transparencys[Label].TextTransparency = 0
+						end
 					else
 						TWS:Create(Label,TweenInfo.new(0.3),{TextTransparency = 0.25}):Play()
 						TWS:Create(Icon_2,TweenInfo.new(0.15),{ImageTransparency = 1}):Play()
-						TWS:Create(TurnOn,TweenInfo.new(0.3),{Size = UDim2.fromScale(0,0)}):Play()
+						TWS:Create(TurnOn,TweenInfo.new(0.3,Enum.EasingStyle.Back,Enum.EasingDirection.In),{
+							Size = UDim2.fromScale(0,0),
+							BackgroundTransparency = 1
+						}):Play()
 						
-                        if  WindowMetatable.Transparencys[Icon_2] then
-                            WindowMetatable.Transparencys[Icon_2].ImageTransparency = 1
-                        end
+						if  WindowMetatable.Transparencys[Label] then
+							WindowMetatable.Transparencys[Label].TextTransparency = 0.25
+						end
+						
+						if WindowMetatable.Transparencys[TurnOn] then
+							WindowMetatable.Transparencys[TurnOn].BackgroundTransparency = 1
+						end
+						
+						if WindowMetatable.Transparencys[Icon_2] then
+							WindowMetatable.Transparencys[Icon_2].ImageTransparency = 1
+						end
 					end
 				end
-				
+
 				__toggle_interface(Default)
+				
+				task.delay(0.5,__toggle_interface,Default);
 				
 				Button.MouseButton1Click:Connect(function()
 					Create_Ripple(Toggle)
 					Default = not Default
 					__toggle_interface(Default)
 					callback(Default)
-					
+
 				end)
-				
+
 				return {
 					edit = function(t)
 						Label.Text = t or "Label Function"
@@ -846,7 +927,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 					end,
 				}
 			end
-			
+
 			function metatable:NewSlider(SliderName,Config,callback)
 				Config = Config or {}
 				Config.Min = Config.Min or 1
@@ -882,7 +963,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				task.delay(0.5,function()
 					TWS:Create(Slider,TweenInfo.new(0.55),{BackgroundTransparency = 0}):Play()
 				end)
-				
+
 				UIAspectRatioConstraint.Parent = Slider
 				UIAspectRatioConstraint.AspectRatio = 6.000
 				UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
@@ -916,7 +997,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				Label.TextWrapped = true
 				Label.TextXAlignment = Enum.TextXAlignment.Left
 				Label.TextTransparency = 1
-			
+
 
 				task.delay(0.5,function()
 					TWS:Create(Label,TweenInfo.new(0.55),{TextTransparency = 0.25}):Play()
@@ -929,7 +1010,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				Slide.Name = "Slide"
 				Slide.Parent = Slider
 				Slide.AnchorPoint = Vector2.new(0.5, 0.5)
-				Slide.BackgroundColor3 = Color3.fromRGB(222, 0, 4)
+				Slide.BackgroundColor3 = Huakuay.Theme.MainColor2
 				Slide.BorderColor3 = Color3.fromRGB(0, 0, 0)
 				Slide.BorderSizePixel = 0
 				Slide.ClipsDescendants = true
@@ -941,7 +1022,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				task.delay(0.5,function()
 					TWS:Create(Slide,TweenInfo.new(0.55),{BackgroundTransparency = 0}):Play()
 				end)
-				
+
 				UIGradient_2.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(212, 212, 212)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(125, 125, 125))}
 				UIGradient_2.Rotation = 90
 				UIGradient_2.Parent = Slide
@@ -989,7 +1070,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				task.delay(0.5,function()
 					TWS:Create(UIStroke_2,TweenInfo.new(0.55),{Transparency = 0}):Play()
 				end)
-				
+
 				Value.Name = "Value"
 				Value.Parent = Slider
 				Value.AnchorPoint = Vector2.new(1, 0.5)
@@ -1016,9 +1097,9 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				UIGradient_3.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(0.64, Color3.fromRGB(206, 206, 206)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(134, 134, 134))}
 				UIGradient_3.Rotation = 90
 				UIGradient_3.Parent = Value
-				
+
 				TWS:Create(Movement,TweenInfo.new(0.1),{Size = UDim2.fromScale((Config.Default / Config.Max), 1)}):Play()
-				
+
 				local IsHold = false
 				local function update(Input)
 					local SizeScale = math.clamp((((Input.Position.X) - Slide.AbsolutePosition.X) / Slide.AbsoluteSize.X), 0, 1)
@@ -1054,7 +1135,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 						end
 					end
 				end)
-				
+
 				return {
 					edit = function(t)
 						Label.Text = t or "Label Function"
@@ -1070,10 +1151,10 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 					end,
 				}
 			end
-			
+
 			function metatable:NewKeybind(KrybindName,Default,callback)
 				callback = callback or Huakuay.b_function
-				
+
 				local Keybind = Instance.new("Frame")
 				local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
 				local UIStroke = Instance.new("UIStroke")
@@ -1129,7 +1210,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				_SPACE.BorderColor3 = Color3.fromRGB(0, 0, 0)
 				_SPACE.BorderSizePixel = 0
 				_SPACE.Size = UDim2.new(0, 0, 1, 0)
-				
+
 				Target.Name = "Target"
 				Target.Parent = Keybind
 				Target.AnchorPoint = Vector2.new(0, 0.5)
@@ -1184,7 +1265,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				Button.TextColor3 = Color3.fromRGB(0, 0, 0)
 				Button.TextSize = 14.000
 				Button.TextTransparency = 1.000
-			
+
 				Label.Name = "Label"
 				Label.Parent = Keybind
 				Label.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -1209,41 +1290,41 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				task.delay(0.5,function()
 					TWS:Create(Label,TweenInfo.new(0.55),{TextTransparency = 0.25}):Play()
 				end)
-				
+
 				UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(0.64, Color3.fromRGB(206, 206, 206)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(134, 134, 134))}
 				UIGradient.Rotation = 90
 				UIGradient.Parent = Label
-				
+
 				local function settext(gt)
 					KeybindText.Text = gt
 					local size = TS:GetTextSize(KeybindText.Text,KeybindText.TextSize,KeybindText.Font,Vector2.new(math.huge,math.huge))
-					
+
 					TWS:Create(Target,TweenInfo.new(0.25),{
 						Size = UDim2.new(0,size.X + 4,0.600000024,0)
 					}):Play()
 				end;
-				
+
 				settext(((Default and Default.Name) or "NONE"))
-				
+
 				local WaitEvent = Instance.new('BindableEvent')
 				local Inbind = false
-				
+
 				Button.MouseButton1Click:Connect(function()
 					if Inbind then
 						return
 					end
-					
+
 					Create_Ripple(Button)
-					
+
 					TWS:Create(Label,TweenInfo.new(0.1),{TextTransparency = 0}):Play()
 					TWS:Create(KeybindText,TweenInfo.new(0.1),{TextTransparency = 0.25}):Play()
-					
+
 					Inbind = true
-					
+
 					settext("...")
-					
+
 					Default = nil
-					
+
 					local Input = UIS.InputEnded:Connect(function(Input,typing)
 						if not typing then
 							if Input.KeyCode ~= Enum.KeyCode.Unknown then
@@ -1251,22 +1332,22 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 							end
 						end
 					end)
-					
+
 					local Out = WaitEvent.Event:Wait()
-					
+
 					if Input then
 						Input:Disconnect()
 					end
-					
+
 					settext(Out.Name)
-					
+
 					TWS:Create(Label,TweenInfo.new(0.1),{TextTransparency = 0.25}):Play()
 					TWS:Create(KeybindText,TweenInfo.new(0.1),{TextTransparency = 0.5}):Play()
-					
+
 					callback(Out)
 					Inbind = false
 				end)
-				
+
 				return {
 					edit = function(t)
 						Label.Text = t or "Label Function"
@@ -1279,10 +1360,10 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 					end,
 				}
 			end
-			
+
 			function metatable:NewButton(ButtonName,callback)
 				callback = callback or Huakuay.b_function
-				
+
 				local Button = Instance.new("Frame")
 				local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
 				local UIStroke = Instance.new("UIStroke")
@@ -1294,18 +1375,18 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 
 				Button.Name = "Button"
 				Button.Parent = LEFT_TIGHT
-				Button.BackgroundColor3 = Color3.fromRGB(222, 0, 4)
+				Button.BackgroundColor3 = Huakuay.Theme.MainColor2
 				Button.BorderColor3 = Color3.fromRGB(0, 0, 0)
 				Button.BorderSizePixel = 0
 				Button.ClipsDescendants = true
 				Button.Size = UDim2.new(0.970000029, 0, 0.899999976, 0)
-				
+
 				Button.BackgroundTransparency = 1
 
 				task.delay(0.5,function()
 					TWS:Create(Button,TweenInfo.new(0.55),{BackgroundTransparency = 0}):Play()
 				end)
-				
+
 				UIAspectRatioConstraint.Parent = Button
 				UIAspectRatioConstraint.AspectRatio = 8.000
 				UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
@@ -1313,13 +1394,13 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				UIStroke.Thickness = 1.500
 				UIStroke.Color = Color3.fromRGB(18, 18, 18)
 				UIStroke.Parent = Button
-				
+
 				UIStroke.Transparency = 1
 
 				task.delay(0.5,function()
 					TWS:Create(UIStroke,TweenInfo.new(0.55),{Transparency = 0}):Play()
 				end)
-				
+
 				UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(80, 80, 80))}
 				UIGradient.Rotation = 90
 				UIGradient.Parent = Button
@@ -1342,13 +1423,13 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				Label.TextScaled = true
 				Label.TextSize = 14.000
 				Label.TextWrapped = true
-		
+
 				Label.TextTransparency = 1
 
 				task.delay(0.5,function()
 					TWS:Create(Label,TweenInfo.new(0.5),{TextTransparency = 0.3}):Play()
 				end)
-				
+
 				UIGradient_2.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(0.64, Color3.fromRGB(206, 206, 206)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(134, 134, 134))}
 				UIGradient_2.Rotation = 90
 				UIGradient_2.Parent = Label
@@ -1365,28 +1446,28 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				Button_2.TextColor3 = Color3.fromRGB(0, 0, 0)
 				Button_2.TextSize = 14.000
 				Button_2.TextTransparency = 1.000
-				
+
 				Button_2.MouseEnter:Connect(function()
 					TWS:Create(Label,TweenInfo.new(0.2),{TextTransparency = 0}):Play()
 				end)
-				
+
 				Button_2.MouseLeave:Connect(function()
 					TWS:Create(Label,TweenInfo.new(0.2),{TextTransparency = 0.3}):Play()
 				end)
-				
+
 				Button_2.MouseButton1Down:Connect(function()
 					TWS:Create(UIGradient,TweenInfo.new(0.1),{Offset = Vector2.new(0, 0.5)}):Play()
 				end)
-				
+
 				Button_2.MouseButton1Up:Connect(function()
 					TWS:Create(UIGradient,TweenInfo.new(0.1),{Offset = Vector2.new(0, 0)}):Play()
 				end)
-				
+
 				Button_2.MouseButton1Click:Connect(function()
 					Create_Ripple(Button)
 					callback()
 				end)
-				
+
 				return {
 					edit = function(t)
 						Label.Text = t or "Label Function"
@@ -1397,10 +1478,10 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 					end,
 				}
 			end
-			
+
 			function metatable:NewDropdown(DropdownName,Data,Default,callback)
 				Data = Data or {}
-				
+
 				Default = Default or Data[1] 
 				callback = callback or Huakuay.b_function
 
@@ -1434,13 +1515,13 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				Dropdown.ClipsDescendants = true
 				Dropdown.Size = UDim2.new(0.970000029, 0, 0.899999976, 0)
 				Dropdown.ZIndex = 6
-				
+
 				Dropdown.BackgroundTransparency = 1
 
 				task.delay(0.5,function()
 					TWS:Create(Dropdown,TweenInfo.new(0.55),{BackgroundTransparency = 0}):Play()
 				end)
-				
+
 				UIAspectRatioConstraint.Parent = Dropdown
 				UIAspectRatioConstraint.AspectRatio = 5.000
 				UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
@@ -1466,8 +1547,8 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				Frame.Position = UDim2.new(0.5, 0, 0, 0)
 				Frame.Size = UDim2.new(1, 0, 1, 0)
 				Frame.ZIndex = 9
-				
-				
+
+
 				UIAspectRatioConstraint_2.Parent = Frame
 				UIAspectRatioConstraint_2.AspectRatio = 5.000
 				UIAspectRatioConstraint_2.AspectType = Enum.AspectType.ScaleWithParentSize
@@ -1482,13 +1563,13 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				MainDropdown.Position = UDim2.new(0.5, 0, 0.670000017, 0)
 				MainDropdown.Size = UDim2.new(0.949999988, 0, 0.400000006, 0)
 				MainDropdown.ZIndex = 7
-				
+
 				MainDropdown.BackgroundTransparency = 1
 
 				task.delay(0.5,function()
 					TWS:Create(MainDropdown,TweenInfo.new(0.55),{BackgroundTransparency = 0}):Play()
 				end)
-				
+
 				UICorner_2.CornerRadius = UDim.new(0, 2)
 				UICorner_2.Parent = MainDropdown
 
@@ -1501,7 +1582,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				task.delay(0.5,function()
 					TWS:Create(UIStroke_2,TweenInfo.new(0.55),{Transparency = 0}):Play()
 				end)
-				
+
 				Icon.Name = "Icon"
 				Icon.Parent = MainDropdown
 				Icon.AnchorPoint = Vector2.new(1, 0.5)
@@ -1514,14 +1595,14 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				Icon.SizeConstraint = Enum.SizeConstraint.RelativeYY
 				Icon.ZIndex = 9
 				Icon.Image = "rbxassetid://7733723321"
-				
+
 				Icon.ImageTransparency = 1
-				
+
 				task.delay(0.5,function()
 					TWS:Create(Icon,TweenInfo.new(0.55),{ImageTransparency = 0}):Play()
 				end)
-				
-				
+
+
 				ValueText.Name = "ValueText"
 				ValueText.Parent = MainDropdown
 				ValueText.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -1538,14 +1619,14 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				ValueText.TextScaled = true
 				ValueText.TextSize = 14.000
 				ValueText.TextWrapped = true
-				
+
 				ValueText.TextTransparency = 1
 
 				task.delay(0.5,function()
 					TWS:Create(ValueText,TweenInfo.new(0.55),{TextTransparency = 0.5}):Play()
 				end)
-				
-				
+
+
 				Button.Name = "Button"
 				Button.Parent = MainDropdown
 				Button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -1558,9 +1639,9 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				Button.TextColor3 = Color3.fromRGB(0, 0, 0)
 				Button.TextSize = 14.000
 				Button.TextTransparency = 1.000
-				
-			
-				
+
+
+
 				Label.Name = "Label"
 				Label.Parent = Frame
 				Label.AnchorPoint = Vector2.new(1, 0.5)
@@ -1578,13 +1659,13 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				Label.TextSize = 14.000
 				Label.TextWrapped = true
 				Label.TextXAlignment = Enum.TextXAlignment.Left
-				
+
 				Label.TextTransparency = 1
 
 				task.delay(0.5,function()
 					TWS:Create(Label,TweenInfo.new(0.55),{TextTransparency = 0}):Play()
 				end)
-				
+
 				UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(0.64, Color3.fromRGB(206, 206, 206)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(134, 134, 134))}
 				UIGradient.Rotation = 90
 				UIGradient.Parent = Label
@@ -1603,13 +1684,13 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				ScrollingFrame.Size = UDim2.new(0.980000019, 0, 0.5, 0)
 				ScrollingFrame.ZIndex = 9
 				ScrollingFrame.ScrollBarThickness = 1
-				
+
 				ScrollingFrame.BackgroundTransparency = 1
 
 				task.delay(0.5,function()
 					TWS:Create(ScrollingFrame,TweenInfo.new(0.55),{BackgroundTransparency = 0.9}):Play()
 				end)
-				
+
 				UIAspectRatioConstraint_3.Parent = ScrollingFrame
 				UIAspectRatioConstraint_3.AspectRatio = 5.000
 				UIAspectRatioConstraint_3.AspectType = Enum.AspectType.ScaleWithParentSize
@@ -1639,7 +1720,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				__SPACE__.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 				__SPACE__.BorderColor3 = Color3.fromRGB(0, 0, 0)
 				__SPACE__.BorderSizePixel = 0
-				
+
 				local function __toggle_interface(val)
 					if val then
 						TWS:Create(UIAspectRatioConstraint,TweenInfo.new(0.3),{AspectRatio = 1.5}):Play()
@@ -1651,24 +1732,24 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 						TWS:Create(UIAspectRatioConstraint_3,TweenInfo.new(0.3),{AspectRatio = 5}):Play()
 					end
 				end
-				
+
 				__toggle_interface(false)
 				local iNTERFACEtOGGLE = false
-				
+
 				Button.MouseButton1Click:Connect(function()
 					Create_Ripple(Frame)
 					iNTERFACEtOGGLE = not iNTERFACEtOGGLE
-					
+
 					__toggle_interface(iNTERFACEtOGGLE)
 				end)
-				
+
 				local function update()
 					for i,v in ipairs(ScrollingFrame:GetChildren()) do
 						if v:IsA('Frame') and v.Name ~= "__SPACE__" then
 							v:Destroy()
 						end
 					end
-					
+
 					for i,v in pairs(Data) do
 						local Button = Instance.new("Frame")
 						local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
@@ -1731,7 +1812,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 						Button_2.TextColor3 = Color3.fromRGB(0, 0, 0)
 						Button_2.TextSize = 14.000
 						Button_2.TextTransparency = 1.000
-						
+
 						Button_2.MouseButton1Click:Connect(function()
 							Create_Ripple(Button)
 							Default = v
@@ -1742,9 +1823,9 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 						end)
 					end
 				end
-				
+
 				update()
-				
+
 				return {
 					edit = function(t)
 						Label.Text = t or "Label Function"
@@ -1758,59 +1839,71 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 					end,
 				}
 			end
-			
-			
+
+
 			return metatable
 		end
-		
+
 		TabMetatable.Left = TabMetatable.__dex(TabFrame.Left)
 		TabMetatable.Right = TabMetatable.__dex(TabFrame.Right)
 
 		return TabMetatable;
 	end
-	
+
 	local function SaveTransparency(object)
 		local Val,BT = pcall(function()
 			return object.BackgroundTransparency
 		end)
-		
+
 		local Val,T = pcall(function()
 			return object.Transparency
 		end)
-		
+
 		local Val,TextTransparency = pcall(function()
 			return object.TextTransparency
 		end)
-		
+
 		local Val,IT = pcall(function()
 			return object.ImageTransparency
+		end)
+		
+		local val,ScrollBarThickness = pcall(function()
+			return object.ScrollBarThickness
 		end)
 		
 		WindowMetatable.Transparencys[object] = {
 			BackgroundTransparency = BT,
 			Transparency = T,
 			TextTransparency = TextTransparency,
-			ImageTransparency = IT
+			ImageTransparency = IT,
+			ScrollBarThickness = ScrollBarThickness,
 		}
 	end
-	
+
 	local function ToggleUI(val)
+		
+		if val then
+			TWS:Create(Frame,TweenInfo.new(0.5,Enum.EasingStyle.Quint),{Size = Huakuay.Screen}):Play()
+		else
+			TWS:Create(Frame,TweenInfo.new(0.5,Enum.EasingStyle.Quint),{Size = UDim2.new(Huakuay.Screen.X.Scale / 1.5,Huakuay.Screen.X.Offset / 1.5,Huakuay.Screen.Y.Scale / 1.5,Huakuay.Screen.Y.Offset / 1.5)}):Play()
+		end
+		
 		for i,v in next,ScreenGui:GetDescendants() do
 			if not WindowMetatable.Transparencys[v] then
 				SaveTransparency(v)
 			end
-			
+
 			local Save = WindowMetatable.Transparencys[v]
-			
+
 			if val then
 				pcall(function()
 					TWS:Create(v,TweenInfo.new(0.5),{BackgroundTransparency = Save.BackgroundTransparency}):Play()
 				end)
-				
+
 				pcall(function()
 					TWS:Create(v,TweenInfo.new(0.5),{Transparency = Save.Transparency}):Play()
 				end)
-				
+
 				task.delay(0.5,function()
 					pcall(function()
 						if WindowMetatable.ScreenUI then
@@ -1818,11 +1911,19 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 						end
 					end)
 				end)
-				
+
 				pcall(function()
 					TWS:Create(v,TweenInfo.new(0.8),{ImageTransparency = Save.ImageTransparency}):Play()
 				end)
+				
+				pcall(function()
+					TWS:Create(v,TweenInfo.new(0.8),{ScrollBarThickness = Save.ScrollBarThickness}):Play()
+				end)
 			else
+				pcall(function()
+					TWS:Create(v,TweenInfo.new(0.8),{ScrollBarThickness = 0}):Play()
+				end)
+				
 				pcall(function()
 					TWS:Create(v,TweenInfo.new(0.5),{BackgroundTransparency = 1}):Play()
 				end)
@@ -1841,9 +1942,9 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 			end
 		end
 	end
-	
+
 	local ToggleUITick = tick()
-	
+
 	function WindowMetatable:SetKeybind(k)
 		UIS.InputBegan:Connect(function(ka)
 			if ka.KeyCode == k then
@@ -1851,12 +1952,18 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				if WindowMetatable.ScreenUI then
 					ScreenGui.Enabled = true
 				end
-				
+
 				ToggleUITick = tick() + 1.5
 				ToggleUI(WindowMetatable.ScreenUI)
 			end
 		end)	
 	end
+	
+	function WindowMetatable:Size(newsize)
+		TWS:Create(Frame,TweenInfo.new(0.7,Enum.EasingStyle.Quint),{Size = newsize}):Play()
+	end
+	
+	
 	
 	task.spawn(function()
 		while true do task.wait(math.random())
@@ -1865,7 +1972,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 			end
 		end	
 	end)
-	
+
 	local dragToggle = nil
 	local dragSpeed = 0.085
 	local dragStart = nil
@@ -1898,7 +2005,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 			end
 		end
 	end)
-	
+
 	return WindowMetatable
 end
 
