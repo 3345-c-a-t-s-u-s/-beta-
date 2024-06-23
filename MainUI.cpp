@@ -1,14 +1,13 @@
-
 local UIS = game:GetService('UserInputService')
 local TWS = game:GetService('TweenService')
 local TS = game:GetService('TextService')
 local Mouse = game:GetService('Players').LocalPlayer:GetMouse()
 
-local function CalculateDistance<Info...>(pointA, pointB)
+local function CalculateDistance(pointA, pointB)
 	return math.sqrt(((pointB.X - pointA.X) ^ 2) + ((pointB.Y - pointA.Y) ^ 2))
 end
 
-function Create_Ripple<Effect...>(Parent : Frame)
+function Create_Ripple(Parent)
 	Parent.ClipsDescendants = true
 	local ripple = Instance.new("Frame")
 	local UICorner = Instance.new("UICorner")
@@ -53,9 +52,9 @@ Huakuay = {
 	CORE_GUI = (gethui and gethui()) or game:FindFirstChild('\67\111\114\101\71\117\105') or game.Players.LocalPlayer.PlayerGui,
 	Screen = UDim2.new(0.05, 300,0.05, 375),
 	Theme = {
-		MainColor = Color3.fromRGB(255, 0, 4),
-		IconColor = Color3.fromRGB(255, 0, 4),
-		MainColor2 = Color3.fromRGB(222, 0, 4),
+		MainColor = Color3.fromRGB(132, 160, 253),
+		IconColor = Color3.fromRGB(255, 255, 255),
+		MainColor2 = Color3.fromRGB(104, 127, 200),
 	},
 	Icon = (function()
 		local ____d,nigg = pcall(function()
@@ -72,8 +71,10 @@ Huakuay = {
 	SmoothText = function(text,label)
 		task.spawn(function()
 			for i=1,#text do task.wait()
-				label.Text = string.sub(text,1,i);
+				label.Text = string.sub(text,1,i) .. "|";
 			end;
+			
+			label.Text = text;
 		end)
 	end,
 	HUAKUAY = {
@@ -108,11 +109,11 @@ Huakuay = {
 
 				UICorner.CornerRadius = UDim.new(1,0)
 				UICorner.Parent = TabButton
-				
+
 				task.delay(0.45,function()
 					TWS:Create(UICorner,TweenInfo.new(0.3),{CornerRadius = UDim.new(0, 2)}):Play()
 				end)
-				
+
 				Icon.Name = "Icon"
 				Icon.Parent = TabButton
 				Icon.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -359,10 +360,10 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 	Logo.Size = UDim2.new(0.2, 0, 0.2, 0)
 	Logo.SizeConstraint = Enum.SizeConstraint.RelativeYY
 	Logo.ZIndex = 5
-	Logo.Image = WindowIcon or "http://www.roblox.com/asset/?id=17702123964"
+	Logo.Image = WindowIcon or "rbxassetid://7733917120"
 	Logo.ImageColor3 = Huakuay.Theme.IconColor
 	Logo.ImageTransparency = 1
-	Logo.Rotation = math.random(80,100)
+	Logo.Rotation = math.random(150)
 	task.delay(0.5,function()
 		TWS:Create(Logo,TweenInfo.new(1.2,Enum.EasingStyle.Quint),{ImageTransparency = 0,Size = UDim2.new(0.400000006, 0, 0.400000006, 0),Position = UDim2.new(0.00999999978, 0, 0.0350000001, 0),Rotation = 0}):Play()
 	end)
@@ -486,15 +487,15 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 	BinFrame.Size = UDim2.new(0,0,0,0)
 	BinFrame.Parent = TabButtons
 
-	local effect_slide = TWS:Create(UIListLayout,TweenInfo.new(1,Enum.EasingStyle.Quint),{Padding = UDim.new(0, 1)})
+	local effect_slide = TWS:Create(UIListLayout,TweenInfo.new(1,Enum.EasingStyle.Quint),{Padding = UDim.new(0, 1)});
 
 	effect_slide.Completed:Connect(function()
 
-		TWS:Create(UIListLayout,TweenInfo.new(0.4),{Padding = UDim.new(0, 8)}):Play()
+		TWS:Create(UIListLayout,TweenInfo.new(0.4),{Padding = UDim.new(0, 8)}):Play();
 
-		BinFrame:Destroy()
+		BinFrame:Destroy();
 
-	end)
+	end);
 
 	effect_slide:Play()
 
@@ -508,7 +509,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 	Tabs.ClipsDescendants = true
 	Tabs.Position = UDim2.new(0.5, 0, 0.59154439, 0)
 	Tabs.Size = UDim2.new(1, 0, 0.816911221, 0)
-	Tabs.ZIndex = 2
+	Tabs.ZIndex = 2;
 
 	function WindowMetatable:NewTab(TabName,TabDesc,TabIcon)
 		local TabMetatable = {}
@@ -519,7 +520,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 			Huakuay.SmoothText(TabName,Button.Label)
 			task.delay(0.2,Huakuay.SmoothText,TabDesc or '-',Button.Description)
 		end)
-		
+
 		Button.Icon.Image = Huakuay.Icon[TabIcon] or TabIcon
 		Button.TabButton.Parent = TabButtons
 		Button.UIAspectRatioConstraint.AspectRatio = 3.250 + (tostring(TabName):len() / 17.5)
@@ -620,7 +621,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 			end
 		end)
 
-		function TabMetatable.__dex(LEFT_TIGHT:ScrollingFrame)
+		function TabMetatable.__dex(LEFT_TIGHT)
 
 			local BinFrame = Instance.new('Frame')
 			BinFrame.BackgroundTransparency = 1
@@ -694,7 +695,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				Label_2.TextSize = 14.000
 				Label_2.TextWrapped = true
 				Label_2.TextXAlignment = Enum.TextXAlignment.Left
-				
+
 				Label_2.TextTransparency = 1
 
 				task.delay(0.5,function()
@@ -782,11 +783,11 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 
 				UICorner.CornerRadius = UDim.new(0.5, 0)
 				UICorner.Parent = Toggle
-				
+
 				task.delay(0.85,function()
 					TWS:Create(UICorner,TweenInfo.new(0.5),{CornerRadius = UDim.new(0, 2)}):Play()
 				end)
-				
+
 				Label.Name = "Label"
 				Label.Parent = Toggle
 				Label.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -1006,11 +1007,11 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				end)
 				UICorner.CornerRadius = UDim.new(0.5, 0)
 				UICorner.Parent = Slider
-				
+
 				task.delay(0.85,function()
 					TWS:Create(UICorner,TweenInfo.new(0.3),{CornerRadius = UDim.new(0, 2)}):Play()
 				end)
-				
+
 				Label.Name = "Label"
 				Label.Parent = Slider
 				Label.AnchorPoint = Vector2.new(1, 0.5)
@@ -1758,7 +1759,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				__SPACE__.BorderColor3 = Color3.fromRGB(0, 0, 0)
 				__SPACE__.BorderSizePixel = 0
 
-				local effect_slide = TWS:Create(UIListLayout_2,TweenInfo.new(0.65),{Padding = UDim.new(0, 4)})
+				local effect_slide = TWS:Create(UIListLayout_2,TweenInfo.new(0.45),{Padding = UDim.new(0, 4)})
 
 				local function __toggle_interface(val)
 					if val then
@@ -1773,7 +1774,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 						end
 					else
 						TWS:Create(Label,TweenInfo.new(0.55),{TextTransparency = 0.3}):Play()
-						TWS:Create(UIListLayout_2,TweenInfo.new(1),{Padding = UDim.new(0.1, 25)}):Play()
+						TWS:Create(UIListLayout_2,TweenInfo.new(0.75),{Padding = UDim.new(0.1, 25)}):Play()
 						TWS:Create(ValueText,TweenInfo.new(0.5),{TextTransparency = 0.5}):Play()
 						TWS:Create(UIAspectRatioConstraint,TweenInfo.new(0.3),{AspectRatio = 5}):Play()
 						TWS:Create(UIAspectRatioConstraint_3,TweenInfo.new(0.3),{AspectRatio = 5}):Play()
@@ -1930,15 +1931,30 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 			ScrollBarThickness = ScrollBarThickness,
 		}
 	end
-	
+
 	local SavePosition = Frame.Position
 	local function ToggleUI(val)
 
 		if val then
+
+			if SavePosition.Y.Offset >= (ScreenGui.AbsoluteSize.Y / 2) then
+				
+				SavePosition = UDim2.new(SavePosition.X.Scale,SavePosition.X.Offset,SavePosition.Y.Scale,ScreenGui.AbsoluteSize.Y - (Frame.AbsoluteSize.Y * 3.5))
+			elseif SavePosition.Y.Offset <= -(ScreenGui.AbsoluteSize.Y / 3.5) then
+				SavePosition = UDim2.new(SavePosition.X.Scale,SavePosition.X.Offset,SavePosition.Y.Scale,Frame.AbsoluteSize.Y / 1.5)
+			end
+			
+			if SavePosition.X.Offset >= (ScreenGui.AbsoluteSize.X / 2) then
+				SavePosition = UDim2.new(SavePosition.X.Scale,SavePosition.X.Offset - (Frame.AbsoluteSize.X * 2),SavePosition.Y.Scale,SavePosition.Y.Offset)
+			elseif SavePosition.X.Offset <= -(ScreenGui.AbsoluteSize.X / 2) then
+				SavePosition = UDim2.new(SavePosition.X.Scale,SavePosition.X.Offset + (Frame.AbsoluteSize.X * 2),SavePosition.Y.Scale,SavePosition.Y.Offset)
+			end
+			
 			TWS:Create(Frame,TweenInfo.new(0.5,Enum.EasingStyle.Quint),{Size = Huakuay.Screen,Position = SavePosition}):Play()
 		else
 			SavePosition = Frame.Position
-			TWS:Create(Frame,TweenInfo.new(0.5,Enum.EasingStyle.Quint),{Size = UDim2.new(Huakuay.Screen.X.Scale / 1.75,Huakuay.Screen.X.Offset / 1.75,Huakuay.Screen.Y.Scale / 1.75,Huakuay.Screen.Y.Offset / 1.75),Position = UDim2.new(0.5, 0,1, 0)}):Play()
+			local lpus = 2.25
+			TWS:Create(Frame,TweenInfo.new(0.5,Enum.EasingStyle.Quint),{Size = UDim2.new(Huakuay.Screen.X.Scale / lpus,Huakuay.Screen.X.Offset / lpus,Huakuay.Screen.Y.Scale / lpus,Huakuay.Screen.Y.Offset / lpus),Position = UDim2.new(0.5, 0,1.1, 0)}):Play()
 		end
 
 		for i,v in next,ScreenGui:GetDescendants() do
@@ -2085,23 +2101,23 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 				end
 			end
 		end)
-		
+
 		local main = function(ka)
 			if ka.KeyCode == k then
 				WindowMetatable.ScreenUI = not WindowMetatable.ScreenUI
 				if WindowMetatable.ScreenUI then
 					ScreenGui.Enabled = true
 				end
-				
+
 				if func then
 					func()
 				end
-				
+
 				ToggleUITick = tick() + 1.5
 				ToggleUI(WindowMetatable.ScreenUI)
 			end
 		end
-		
+
 		task.delay(1,UIS.InputBegan.Connect,UIS.InputBegan,main)
 
 	end
@@ -2151,7 +2167,7 @@ function Huakuay.new(WindowName,WindowDescription,WindowIcon)
 			end
 		end
 	end)
-	
+
 	return WindowMetatable
 end
 
@@ -2224,7 +2240,7 @@ function Huakuay.Notification()
 		Title.TextXAlignment = Enum.TextXAlignment.Left
 		Title.TextTransparency = 1
 		Title.RichText = true
-		
+
 		Body.RichText = true
 		Body.Name = "Body"
 		Body.Parent = Block
@@ -2271,11 +2287,11 @@ function Huakuay.Notification()
 				Size = UDim2.new(0.125, 0,0.4, 0),
 
 			}):Play()
-			
+
 			TWS:Create(Notify,TweenInfo.new(0.1,Enum.EasingStyle.Quint),{
 				Size = UDim2.new(1, 0,1.4, 0)
 			}):Play()
-			
+
 			TWS:Create(UICorner,TweenInfo.new(0.45),{CornerRadius = UDim.new(0.5,0)}):Play()
 
 			TWS:Create(Body,TweenInfo.new(0.1),{TextTransparency = 1,Size = UDim2.new(0.96613884, 0, 0.68907553, 0)}):Play()
@@ -2306,8 +2322,8 @@ function Huakuay.Notification()
 
 		task.delay(dur or 10,destroy);
 
-		return destroy
-	end
-end
+		return destroy;
+	end;
+end;
 
-return Huakuay
+return Huakuay;
