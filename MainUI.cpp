@@ -1,4 +1,4 @@
--- This file was obfuscate using False + StackFuscator v1.0.8 [discord.gg/7ZQ244HpVp , https://discord.gg/BH6pE7jesa]
+-- This file was obfuscate using StackFuscator v1.0.8 [https://discord.gg/BH6pE7jesa]
 
 
 local _,__,___ = {"STACK-FUSCATOR MAKE BY CAT_SUS#000 - [rMUkuEEkAvuOP\u{005f}EnUvOqQCOJoASONar\u{005f}TqDfvpMoDqWVrMPWKltHB\u{005f}cuhzKhPUyiyCTYpgtQYbvCxeRLOQDIhqt\u{005f}gChWWVJRXpazkDxEPxmwDjV\u{005f}XTzbhiNeuKelNRb\u{005f}utycqQrdFSDAYymNNUKnPB]",string.gsub,string.sub,string.char,(bit32 or bit).bxor,string.len,string.byte,'\115\108\110\97\102',setmetatable,getmetatable,table.concat,debug},{1,EpTbl_j={
